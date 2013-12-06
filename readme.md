@@ -1,7 +1,7 @@
 Twitter Mention Monitor
 =======================
 
-This is a service I put together to monitor your @mentions and forward them to the user as a Direct Message (DM) for faster notification. 
+This is a service I put together to monitor your @mentions and forward them to you as a Direct Message (DM) for faster notification. 
 
 This service has since been taken offline because Twitter launched duplicate functionality.
 
