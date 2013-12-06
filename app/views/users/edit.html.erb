@@ -1,0 +1,32 @@
+<h1>Editing user</h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </p>
+  <p>
+    <%= f.label :oauth_token %><br />
+    <%= f.text_field :oauth_token %>
+  </p>
+  <p>
+    <%= f.label :oauth_secret %><br />
+    <%= f.text_field :oauth_secret %>
+  </p>
+  <p>
+    <%= f.label :last_mention_id %><br />
+    <%= f.text_field :last_mention_id %>
+  </p>
+  <p>
+    <%= f.label :is_admin %><br />
+    <%= f.check_box :is_admin %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

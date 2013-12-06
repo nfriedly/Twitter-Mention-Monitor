@@ -1,0 +1,37 @@
+<h2>Congratulations <%= session[:username] %></h2>
+
+<p>We are now tracking your mentions!</p>
+
+<% if session[:mention] %>
+	<% m = session[:mention] %>
+	
+	<p>Your most recent mention was:</p> 
+	
+	<div class="tweet" id="last_mention">
+		<img src="<%= m['user']['profile_image_url'] %>" alt="<% m['user']['name'] %>" /><%= m['user']['screen_name'] %>: <%= m['text'] %>
+		<div class="timestamp">Sent at <%= DateTime.parse(m['created_at']).strftime("*%I:%M%p on *%m/*%d/%Y").gsub('*0', '').gsub('*', '') 
+		# for some reason ruby doesn't let you do time without leading 0's
+		# fix adapted from http://www.nullislove.com/2007/05/16/time-for-strftime/
+		 %></div>
+	</div>
+	
+	<p>... anything newer than that will get picked up by our systems and 
+	forwarded to you as a direct message from @mentionmonitor</p>
+	
+	<% 
+	# to avoid trouble later. Flash data should be able to do this but apparently can't
+	session[:mention] = nil 
+	%>
+<% else %>
+
+	<p>We didn't see any existing mentions on your account, but we'll let you know as soon as we do!</p>
+	
+<% end %>
+
+<p>We also took the liberty of following @<%= MM_USERNAME %> (so that we can DM you)  <%= MM_NEWS_USERNAME %> (for system-wide updates - low volume) from your 
+account. (Don't worry, we won't spam your twitter feed.)</p>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	mpmetrics.track_funnel("signup", 3, "return from twitter"); // next step, money!
+})

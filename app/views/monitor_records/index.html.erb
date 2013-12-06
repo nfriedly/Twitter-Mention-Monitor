@@ -1,0 +1,28 @@
+<h1>Listing monitor_records</h1>
+
+<table>
+  <tr>
+    <th>Completed</th>
+    <th>Tweets sent</th>
+    <th>Overruns</th>
+    <th>Runtime</th>
+    <th>Timestamp</th>
+  </tr>
+
+<% @monitor_records.each do |monitor_record| %>
+  <tr>
+    <td><%=h monitor_record.completed %></td>
+    <td><%=h monitor_record.tweets_sent %></td>
+    <td><%=h monitor_record.overruns %></td>
+    <td><%=h monitor_record.runtime %></td>
+    <td><%=h monitor_record.created_at %></td>
+    <td><%= link_to 'Show', monitor_record %></td>
+    <td><%= link_to 'Edit', edit_monitor_record_path(monitor_record) %></td>
+    <td><%= link_to 'Destroy', monitor_record, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New monitor_record', new_monitor_record_path %>

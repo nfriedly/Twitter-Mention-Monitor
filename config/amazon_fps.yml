@@ -1,0 +1,7 @@
+development:
+  access_key: 'AKIAIOJKJ33J7SP33N6A'
+  secret_access_key: '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'
+  return_base: 'http://twittermentionmonitor.com'
+  endpoint: 'https://fps.sandbox.amazonaws.com'
+  pipeline: 'https://authorize.payments-sandbox.amazon.com/cobranded-ui/actions/start?'
+  version: '2007-01-08'

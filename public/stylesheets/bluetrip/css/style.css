@@ -1,0 +1,60 @@
+/*************************************
+   WELCOME TO THE CUSTOM STYLESHEET
+--------------------------------------
+              style.css
+        BlueTrip CSS Framework
+    Put your custom styles in here.
+***************************************/
+
+/**************************************/
+/*           COLOR SCHEME             */
+/**************************************
+- background blue		#d9e9f3
+- fun blue		#25a6ff
+-           #
+-           #
+-           #
+***************************************/
+
+
+/**************************************/
+/*              GLOBALS               */
+/**************************************/
+#loading {display: none;}
+
+
+body { background-color: #d9e9f3; }
+
+.container {width: 720px; border: 2px solid white; border-radius:10px; -webkit-border-radius:20px; -moz-border-radius:20px; background-color:white; padding:20px;} /* 710 + an extra 10 for wiggling */
+
+/**************************************/
+/*              HEADER                */
+/**************************************/
+#header {min-height: 6em;}
+#header p {margin: 1.5em 0 0 0;} /* to match title h1 margin */
+
+
+/**************************************/
+/*             NAVIGATION             */
+/**************************************/
+
+
+
+/**************************************/
+/*            MAIN CONTENT            */
+/**************************************/
+#feed h4 {margin-top:0;}
+#feed img {margin: 0 27px 5px 10px; float: right;}
+#feed ul, #feed li {margin-left:0; list-style-type:none;}
+#feed li {margin-bottom: 10px;}
+#feed li div a:link {color:#666; text-decoration:none;}
+
+#signup table { margin:auto; border:0; }
+#signup td {border:0;}
+#signup input {width:4em;}
+#signup input[type=submit] { width:8em;}
+
+/**************************************/
+/*               FOOTER               */
+/**************************************/
+

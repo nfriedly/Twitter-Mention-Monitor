@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title>Twitter Mention Monitor</title>
+    <link rel="stylesheet" href="/stylesheets/bluetrip/css/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/stylesheets/bluetrip/css/print.css" type="text/css" media="print"> 
+    <!--[if IE]>
+        <link rel="stylesheet" href="/stylesheets/bluetrip/css/ie.css" type="text/css" media="screen, projection">
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/bluetrip/css/style.css" type="text/css" media="screen, projection">
+	<link type="text/css" href="javascripts/jquery/css/start/jquery-ui-1.8.2.custom.css" rel="stylesheet" />	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="javascripts/jquery/js/jquery-ui-1.8.2.custom.min.js"></script>
+
+</head>
+<body>
+	<div class="container">
+	    <div id="header">
+			<div class="span-11 collborder">
+	      		<h1><a href="/">Twitter Mention Monitor</a></h1>
+			</div>
+			<div class="span-7 last">
+				
+			<% if(@user) %>
+				<p>Hi <%= @user.username %> | <a href="/account">My Account</a></p>
+			<% else %>
+				<p><a href="/account/signup" id="login"><img src="/images/twitter_login.png" alt="Log in via Twitter" /></a></p>
+				<div id="loading">Redirecting you to twitter... This may take a minute.</div>
+			<% end %>
+			</div>
+	    </div>
+		<div  class="clearfix"></div>
+		<div id="body">
+			<%= yield %>
+		</div>
+		<div  class="clearfix"></div>
+		<div id="footer">
+			<a href="http://nfriedly.com">Nathan Friedly - Javascript Ninja</a>
+      | <a href="http://nfriedly.com/px/" title="anti-filter proxy (poxy, phpr0xi, & a2">Free SSL PHProxy</a>
+      | <a href="http://whatsmyua.com" title="Web Browser User Agent breakdown and explination">Whats My User Agent - User Agent strings explained</a>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="/javascripts/application.js"></script>
+	
+	<script type='text/javascript'> var mp_protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://'); document.write(unescape('%3Cscript src="' + mp_protocol + 'api.mixpanel.com/site_media/js/api/mixpanel.js" type="text/javascript"%3E%3C/script%3E')); </script> <script type='text/javascript'> try {  var mpmetrics = new MixpanelLib('ca1e93befbf2ef2377f3701963db67b8'); } catch(err) { null_fn = function () {}; var mpmetrics = {  track: null_fn,  track_funnel: null_fn,  register: null_fn,  register_once: null_fn, register_funnel: null_fn }; } </script>
+	
+	
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-1735765-16']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  completed: false
+  tweets_sent: 1
+  overruns: 1
+  runtime: 9.99
+
+two:
+  completed: false
+  tweets_sent: 1
+  overruns: 1
+  runtime: 9.99

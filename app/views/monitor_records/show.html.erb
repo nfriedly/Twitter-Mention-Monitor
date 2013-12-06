@@ -1,0 +1,33 @@
+<p>
+  <b>Completed:</b>
+  <%=h @monitor_record.completed %>
+</p>
+
+<p>
+  <b>Tweets sent:</b>
+  <%=h @monitor_record.tweets_sent %>
+</p>
+
+<p>
+  <b>Overruns:</b>
+  <%=h @monitor_record.overruns %>
+</p>
+
+<p>
+  <b>Runtime:</b>
+  <%=h @monitor_record.runtime %>
+</p>
+
+<p>
+  <b>Created At:</b>
+  <%=h @monitor_record.created_at %>
+</p>
+
+<p>
+  <b>Updated At:</b>
+  <%=h @monitor_record.updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_monitor_record_path(@monitor_record) %> |
+<%= link_to 'Back', monitor_records_path %>

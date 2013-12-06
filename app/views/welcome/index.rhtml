@@ -1,0 +1,174 @@
+<div class="span-11 collborder">
+	<div id="about">
+		<p>Twitter Mention Monitor is a service that monitors your twitter account for any time someone mentions you (with an '@' symbol and your username).</p>
+		<p>Whenever it finds a new mention, it forwards the mention to you as a Direct Message, meaning that you get an email and a text message.</p>
+		<p><strong>It makes keeping up with twitter so easy, it's almost like cheating.</strong></p>
+	</div>
+	
+	<hr />
+	
+	<h3>Free while in beta!</h3>
+	<p>Just click the <b>Sign in with Twitter</b> button at the top to get started!</p>
+	<p>This will transition into monthly subscription service once the final version launches. However, <b>beta users will get three months of free service after we launch the final version</b>.</p>
+	<!--
+	<% form_tag('/fps/redirect_to_amazon', :id=>"signup") do %> 
+		<h3>Signup</h3>
+		<p>This services operates on a pay-what-you want model. Pay however much you feel it is worth.</p>
+		<p>Payment recurs monthly, you can cancel or change the amount at any time.</p>
+		
+		<table id="amounts_table">
+			<tr>
+				<td colspan="2">
+					<div id="slider"></div>
+				</td>
+			<tr>
+				<td>You Pay:</td>
+				<td>$<input name="amount" id="amount" value="10.00"/></td>
+			</tr>
+			<tr class="details">
+				<td><span id="processor">Amazon</span> Takes:</td>
+				<td>$<input disabled="disabled" id="fee" /></td>
+			</tr>
+			<tr class="details">
+				<td>I get:</td>
+				<td>$<input disabled="disabled" id="iget" /></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a href="#" id="show_hide_details"><small>Hide payment details</small></a>
+				</td>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="submit" id="submit"  value="signup"></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:center">
+					<img src="/images/amazon_payments.jpg" alt="" />
+				</td>
+			</tr>
+		</table>
+	<% end %>
+	-->
+</div>
+<div class="span-7 last">
+	<div id="feed"></div>
+	<div style="float:right;">
+		<a href="http://mixpanel.com/?from=partner"><img src="http://mixpanel.com/site_media/images/mixpanel_partner_logo.gif" alt="Real-time Web Analytics by Mixpanel" /></a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		mpmetrics.track_funnel("signup",1,"view home page");
+		$.getScript('http://twitter.com/statuses/user_timeline/mentionmonitor.json?callback=twitter_cb&amp;count=3');
+		
+		var showHide = $('#show_hide_details small')
+		var hideText = showHide.text();
+		var showText = "Show payment details";
+		
+		$('#show_hide_details').click(function(){
+			if(showHide.text() == hideText){
+				$('#amounts_table .details td').hide('slow');
+				showHide.text(showText);
+			} else {
+				$('#amounts_table .details td').show('slow');
+				showHide.text(hideText);
+			}
+			return false;
+		}).click();
+		
+		// http://www.mediacollege.com/internet/javascript/number/round.html
+		function roundNumber(number,decimals) {
+			var newString;// The new rounded number
+			decimals = Number(decimals);
+			if (decimals < 1) {
+				newString = (Math.round(number)).toString();
+			} else {
+				var numString = number.toString();
+				if (numString.lastIndexOf(".") == -1) {// If there is no decimal point
+					numString += ".";// give it one at the end
+				}
+				var cutoff = numString.lastIndexOf(".") + decimals;// The point at which to truncate the number
+				var d1 = Number(numString.substring(cutoff,cutoff+1));// The value of the last decimal place that we'll end up with
+				var d2 = Number(numString.substring(cutoff+1,cutoff+2));// The next decimal, after the last one we want
+				if (d2 >= 5) {// Do we need to round up at all? If not, the string will just be truncated
+					if (d1 == 9 && cutoff > 0) {// If the last digit is 9, find a new cutoff point
+						while (cutoff > 0 && (d1 == 9 || isNaN(d1))) {
+							if (d1 != ".") {
+								cutoff -= 1;
+								d1 = Number(numString.substring(cutoff,cutoff+1));
+							} else {
+								cutoff -= 1;
+							}
+						}
+					}
+					d1 += 1;
+				} 
+				if (d1 == 10) {
+					numString = numString.substring(0, numString.lastIndexOf("."));
+					var roundedNum = Number(numString) + 1;
+					newString = roundedNum.toString() + '.';
+				} else {
+					newString = numString.substring(0,cutoff) + d1.toString();
+				}
+			}
+			if (newString.lastIndexOf(".") == -1) {// Do this again, to the new string
+				newString += ".";
+			}
+			var decs = (newString.substring(newString.lastIndexOf(".")+1)).length;
+			for(var i=0;i<decimals-decs;i++) newString += "0";
+			//var newNumber = Number(newString);// make it a number if you like
+			
+			return newString;
+		}
+
+		
+		
+		function updateNumbers(){
+			// numbers are in cents
+			var amount =  $('#amount').val(),
+				fee = "",
+				iget = "";
+			// parseInt doesn't work on numbers like ".05", so this makes it "0.05"
+			if(amount.substr(0,1) == '.'){ amount = "0" + amount; console.log('fixed amount', amount);}
+			amount = parseFloat(amount, 10) * 100;
+			amount = roundNumber(amount, 2); // only whole cents for the whole number
+			
+			if(amount && !isNaN(amount)){
+				// fee structure based on https://payments.amazon.com/sdui/sdui/business?sn=devpricing/fpspricing
+				if(amount < 5){
+					fee = (amount*0.2 > 0.25) ? amount*0.2 : 0.25; // that's $0.0025, but in pennys not dollars
+				} else if (amount < 10000){
+					fee = amount*0.05 + 0.05;
+				} else {
+					fee = amount*0.029 + 30;
+				}
+				// roundNuber should remove the js floating point inaccuracies and also only show whole penys when appropriate
+				
+				iget = amount - fee;
+				iget = roundNumber(iget/100, ((fee<1)?4:2) ); // round to 4 or 2 places, depending on fee
+				
+				fee = roundNumber(fee/100, ((fee<1)?4:2) ); // round to 4 or 2 places, depending on fee
+				$('#slider').slider( "value" , Math.round(amount/100) );
+			}
+			$('#fee').val( fee );
+			$('#iget').val( iget );
+		}
+		
+		$('#slider').slider({
+			min:0.01, // amount in cents
+			max:30,
+			value: 10,
+			step:0.01,
+			slide: function(event, ui) {
+				$('#amount').val( roundNumber(ui.value, 2) ); // from (int) dollars to (int) cents to formatted (double) dollars
+				updateNumbers();
+			}
+		});
+		
+		$('#amount').keyup(updateNumbers).change(updateNumbers); 
+		
+		// in case the page was refreshed
+		updateNumbers();
+	});
+</script>
